@@ -11,11 +11,45 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: 4rem;
+  font-weight: bold;
 }
 
 .score {
   position: absolute;
   right: 8px;
   top: 8px;
+}
+
+.goodbye {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  cursor: pointer;
+}
+
+.question span {
+  font-size: 3rem;
+  font-weight: 100;
+  padding: 1rem;
+}
+
+.question input {
+  width: 6rem;
+}
+
+.user form{
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.user button {
+  margin-left: 2em;
+  background-color: transparent;
+  border: 1px solid white;
+  padding: 1rem;
+  color: white;
+  font-size: 2rem;
 }

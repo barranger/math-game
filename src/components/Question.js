@@ -3,8 +3,9 @@ import React, { useRef, useState } from 'react';
 const Question = ({onCorrect}) => {
   const [question, setQuestion] = useState(null);
   const inputRef = useRef();
-
+  const feedbackRef = useRef();
   const operations = [ '+', '-', '/', '*'];
+
 
   const loadQuestion = () => {   
     const q = {
@@ -31,10 +32,16 @@ const Question = ({onCorrect}) => {
     const answer = inputRef.current.value;
 
     if(answer === `${question.answer}`) {
+      feedbackRef.current.innerText = "correct";
       onCorrect();
     } else {
-      console.log('wrong!!!!');
+      feedbackRef.current.innerText = "Wrong";
     }
+
+    feedbackRef.current.classList.remove('hidden');
+    setTimeout(() => {
+      feedbackRef.current.classList.add('hidden');
+    }, 1000)
     inputRef.current.value = '';
     setQuestion(null);
 
@@ -47,8 +54,15 @@ const Question = ({onCorrect}) => {
         <span>{question.operation}</span>
         <span>{question.right}</span>
         <span>=</span>
-        <span><input ref={inputRef} /></span>
+        <span>
+          <input 
+            ref={inputRef}
+            onBlur={() => inputRef.current.focus()} 
+            autoFocus
+          />
+        </span>
       </div>
+      <h3 className="hidden" ref={feedbackRef}>Correct</h3>
     </form>
   );
 };
