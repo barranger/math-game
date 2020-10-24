@@ -8,16 +8,15 @@ const Question = ({onCorrect}) => {
 
 
   const loadQuestion = () => {   
-    const q = {
-      left: Math.round(Math.random() * 9),
-      right: Math.round(Math.random() * 9),
-      operation: operations[Math.round(Math.random() * 3)],
+    const q = {};
+    while(!Number.isInteger(q.answer)) {
+      
+      q.left = Math.round(Math.random() * 9);
+      q.right = Math.round(Math.random() * 9);
+      q.operation = operations[Math.round(Math.random() * 3)];
+      // eslint-disable-next-line no-eval
+      q.answer = eval(`${q.left}${q.operation}${q.right}`);
     };
-
-    // eslint-disable-next-line no-eval
-    q.answer = eval(`${q.left}${q.operation}${q.right}`);
-
-    console.log(q);
     setQuestion(q);
   }
 

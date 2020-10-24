@@ -13,7 +13,7 @@ const App = () => {
       localStorage.setItem('math-name', u);
     }} />
   }
-  console.log('about to display ' + user);
+  
   return (
     <div className="App">
       <header className="App-header">
