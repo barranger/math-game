@@ -15,13 +15,21 @@ const App = () => {
   }
   
   return (
+    <>
+    <div className="bg">
+      <div className="bg-circle-orange"></div>
+      <div className="bg-circle-red"></div>
+      <div className="bg-circle-yellow"></div>
+    </div>
     <div className="App">
       <header className="App-header">
-        <p>{`Hello ${user}`}</p>
-        
+        <p>{`Math Game`}</p>
       </header>
       <section className="score">
-          <p>{`you're score is ${score}`}</p>
+        <h3>Scores</h3>
+        <ol>
+          <li>{`${user}: ${score}`}</li>
+        </ol>
         </section>
       <section className="question">
         <Question onCorrect={() => setScore( score + 1)} />
@@ -31,11 +39,13 @@ const App = () => {
         <div onClick={() => {
           localStorage.clear();
           setUser(null);
+          setScore(0);
         }}>
           <p>Good Bye!!</p>
         </div>
       </section>
     </div>
+    </>
   );
 }
 

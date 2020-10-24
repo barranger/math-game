@@ -31,7 +31,7 @@ const Question = ({onCorrect}) => {
     const answer = inputRef.current.value;
 
     if(answer === `${question.answer}`) {
-      feedbackRef.current.innerText = "correct";
+      feedbackRef.current.innerText = "Correct";
       onCorrect();
     } else {
       feedbackRef.current.innerText = "Wrong";
@@ -48,6 +48,7 @@ const Question = ({onCorrect}) => {
 
   return (
     <form onSubmit={handleAnswer}>
+      <h2>Answer the Following Question:</h2>
       <div className="question">
         <span>{question.left}</span>
         <span>{question.operation}</span>
@@ -61,7 +62,7 @@ const Question = ({onCorrect}) => {
           />
         </span>
       </div>
-      <h3 className="hidden" ref={feedbackRef}>Correct</h3>
+      <h3 className="hidden feedback" ref={feedbackRef}>Correct</h3>
     </form>
   );
 };

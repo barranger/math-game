@@ -11,8 +11,11 @@ const User = ({initial, save}) => {
     <div className="App">
       <section className="user">
         <form onSubmit={handleName}>
-          <input placeholder="Enter your name" ref={inputRef}></input>
-          <button type="submit">Submit</button>
+          <input 
+            placeholder="Enter your name" 
+            ref={inputRef}
+            autoFocus></input>
+          <button type="submit">Play Game</button>
         </form>
       </section>
     </div>);

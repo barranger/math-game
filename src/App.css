@@ -1,8 +1,15 @@
 .App {
   text-align: center;
-  background-color: #282c34;
-  min-height: 100vh;
+  width: 40rem;
+  height: 40rem;
+  margin: calc(50vh - 20rem) auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   color: white;
+  background: #456BD9;
+  border-radius: 50%;
 }
 
 .App-header {
@@ -11,7 +18,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: bold;
 }
 
@@ -38,18 +45,76 @@
   width: 6rem;
 }
 
+
+
 .user form{
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
   justify-content: center;
   align-items: center;
 }
 
 .user button {
-  margin-left: 2em;
+  margin-top: 2em;
   background-color: transparent;
-  border: 1px solid white;
+  border: 0;
   padding: 1rem;
   color: white;
   font-size: 2rem;
+}
+
+.feedback {
+  background-color: #2cb9f4;
+  margin: 2rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 6rem;
+  height: 6rem;
+}
+
+.bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.bg-circle-red {
+  position: absolute;
+  background-color: #e33c6a;
+  border-radius: 50%;
+  top: 20vw;
+  height: 100vw;
+  left: -50vw;
+  width: 100vw;
+  z-index: -2;
+}
+
+.bg-circle-yellow {
+  position: absolute;
+  background-color: #fcdb57;
+  border-radius: 50%;
+  top: -45vw;
+  height: 100vw;
+  left: 0vw;
+  width: 100vw;
+  z-index: -4;
+}
+
+.bg-circle-orange {
+  position: absolute;
+  background-color: #f96d3d;
+  border-radius: 50%;
+  top: -50vw;
+  height: 100vw;
+  left: 20vw;
+  width: 100vw;
+  z-index: -3;
 }

@@ -3,6 +3,7 @@ body {
   font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #0930a5;
 }
 
 code {
@@ -14,11 +15,17 @@ input {
   background-color: transparent;
   border: 1px solid white;
   color: white;
+  text-align: center;
+  padding: 0.4rem;
   font-size: 3rem;
   font-weight: 100;
 }
 
+input::placeholder {
+  color: rgba(255,255,255, 0.2);
+}
+
 .hidden {
-  opacity: 0;
+  opacity: 0 !important;
   transition: all 1s;
 }
