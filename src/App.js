@@ -4,7 +4,7 @@ import User from './components/User';
 import Question from './components/Question';
 
 const App = () => {
-  const [user, setUser] = useState('Barranger');
+  const [user, setUser] = useState(null);
   const [score, setScore] = useState(0);
 
   if(!user) {
