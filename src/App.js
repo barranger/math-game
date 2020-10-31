@@ -1,19 +1,32 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import User from './components/User';
 import Question from './components/Question';
+import * as io from 'socket.io-client';
 
 const App = () => {
-  const [user, setUser] = useState(localStorage.getItem('math-name'));
+  const [user, setUser] = useState('');
   const [score, setScore] = useState(0);
+  const [socket, setSocket] = useState(null);
+  const [userList, setUserList] = useState({});
+
+  useEffect(() => {
+    if(!socket && user) {
+      const sock = io('http://localhost:8080');
+      sock.on('user list', (ul) => {
+        console.log('got back a userList', userList);
+        setUserList(ul);
+      });
+      setSocket(sock);
+    }
+  }, [socket, user, userList]);
 
   if(!user) {
     return <User initial={user} save={(u) => {
       setUser(u);
-      localStorage.setItem('math-name', u);
     }} />
   }
-  
+
   return (
     <>
     <div className="bg">
@@ -28,16 +41,24 @@ const App = () => {
       <section className="score">
         <h3>Scores</h3>
         <ol>
-          <li>{`${user}: ${score}`}</li>
+          {Object.keys(userList).map(u => {   
+            return <li>{`${userList[u].user}: ${userList[u].score}`}</li>
+          })}
         </ol>
         </section>
       <section className="question">
-        <Question onCorrect={() => setScore( score + 1)} />
+        <Question onCorrect={
+          () => {
+            setScore( score + 1);
+            if(socket) {
+              socket.emit('correct answer', { user, score: score + 1 })
+            }
+          }
+        } />
       </section>
      
       <section className="goodbye">
         <div onClick={() => {
-          localStorage.clear();
           setUser(null);
           setScore(0);
         }}>

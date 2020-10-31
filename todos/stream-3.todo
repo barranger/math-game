@@ -1,0 +1,5 @@
+[x] keep list of users on server
+[x] remove local storage for username
+[x] send userlist on connect
+[x] display userlist on client with scores
+
