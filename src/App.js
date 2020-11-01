@@ -12,7 +12,7 @@ const App = () => {
 
   useEffect(() => {
     if(!socket && user) {
-      const sock = io('http://localhost:8080');
+      const sock = io();
       sock.on('user list', (ul) => {
         console.log('got back a userList', userList);
         setUserList(ul);
