@@ -1,5 +1,4 @@
 const express = require('express');
-// const bodyParser = require('body-parser')
 const path = require('path');
 const app = express();
 var http = require('http').Server(app);
@@ -9,11 +8,11 @@ const userList = {};
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('/ping', function (req, res) {
+app.get('/ping', (req, res) => {
  return res.send('pong');
 });
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
@@ -23,7 +22,7 @@ const sortUserList = () => {
   return toSend;
 }
 
-io.on('connection', function(socket){
+io.on('connection', (socket) => {
   console.log('we are connected')
   socket.emit('user list', sortUserList());
 
@@ -31,7 +30,13 @@ io.on('connection', function(socket){
     console.log('user disconnected');
   });
 
-  socket.on('correct answer', function(msg) {
+  socket.on('register', (user) => {
+    userList[user] = { user, score: 0};
+    console.log(`${user} registered, now we have`, userList);
+    socket.emit('user list', sortUserList());
+  })
+
+  socket.on('correct answer', (msg) => {
     userList[msg.user] = msg;
     io.emit('user list', sortUserList());
     console.log('got back answer', msg);
@@ -42,8 +47,6 @@ io.on('connection', function(socket){
 
 const port = process.env.PORT || 8080;
 
-http.listen(port, function(){
+http.listen(port, () => {
   console.log('listening on *:' + port);
 });
-
-//app.listen(process.env.PORT || 8080);

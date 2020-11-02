@@ -13,6 +13,8 @@ const App = () => {
   useEffect(() => {
     if(!socket && user) {
       const sock = io();
+
+      sock.emit('register', user);
       sock.on('user list', (ul) => {
         console.log('got back a userList', userList);
         setUserList(ul);
