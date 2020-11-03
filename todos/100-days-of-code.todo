@@ -1,4 +1,8 @@
 ✔ sign up for heroku @started(20-11-01 18:06) @done(20-11-01 18:06) @lasted(48s)
 ✔ push to heroku @started(20-11-01 18:06) @done(20-11-01 18:07) @lasted(1m1s)
 ✔ init user on connect @done(20-11-02 07:51)
+✔ create register post endpoint @done(20-11-03 09:38)
+
+[] move register to a rest endpoint
+[] don't allow re-register?
 [] 

@@ -3,10 +3,12 @@ const path = require('path');
 const app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var bodyParser = require('body-parser');
 
 const userList = {};
 
 app.use(express.static(path.join(__dirname, 'build')));
+app.use(bodyParser.json());
 
 app.get('/ping', (req, res) => {
  return res.send('pong');
@@ -15,6 +17,13 @@ app.get('/ping', (req, res) => {
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
+
+app.post('/register', (req, res) => {
+  const { user } = req.body;
+  userList[user] = { user, score: 0};
+  console.log(`${user} registered, now we have`, userList);
+  res.send(sortUserList());
+})
 
 const sortUserList = () => {
   let toSend = Object.keys(userList).map(key => userList[key]);
@@ -29,12 +38,6 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
-
-  socket.on('register', (user) => {
-    userList[user] = { user, score: 0};
-    console.log(`${user} registered, now we have`, userList);
-    socket.emit('user list', sortUserList());
-  })
 
   socket.on('correct answer', (msg) => {
     userList[msg.user] = msg;
