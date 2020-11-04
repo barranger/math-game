@@ -5,21 +5,38 @@ import Question from './components/Question';
 import * as io from 'socket.io-client';
 
 const App = () => {
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(null);
   const [score, setScore] = useState(0);
   const [socket, setSocket] = useState(null);
   const [userList, setUserList] = useState({});
 
   useEffect(() => {
-    if(!socket && user) {
+    const setup = async () => {
       const sock = io();
 
-      sock.emit('register', user);
       sock.on('user list', (ul) => {
         console.log('got back a userList', userList);
         setUserList(ul);
       });
       setSocket(sock);
+
+      console.log('in setup with ', {user});
+      const res = await fetch('/register', {
+        method: 'post', 
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({user})
+      });
+      
+      const ul = await res.json();
+      setUserList(ul);
+      console.log('registered', ul);
+    }
+      
+    if (!socket && user) {
+      setup();
     }
   }, [socket, user, userList]);
 
@@ -44,7 +61,7 @@ const App = () => {
         <h3>Scores</h3>
         <ol>
           {Object.keys(userList).map(u => {   
-            return <li>{`${userList[u].user}: ${userList[u].score}`}</li>
+            return <li key={u}>{`${userList[u].user}: ${userList[u].score}`}</li>
           })}
         </ol>
         </section>

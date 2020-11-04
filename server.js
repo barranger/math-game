@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
+  console.log('body', req.body);
   const { user } = req.body;
   userList[user] = { user, score: 0};
   console.log(`${user} registered, now we have`, userList);
@@ -33,7 +34,6 @@ const sortUserList = () => {
 
 io.on('connection', (socket) => {
   console.log('we are connected')
-  socket.emit('user list', sortUserList());
 
   socket.on('disconnect', () => {
     console.log('user disconnected');

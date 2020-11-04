@@ -3,6 +3,7 @@
 ✔ init user on connect @done(20-11-02 07:51)
 ✔ create register post endpoint @done(20-11-03 09:38)
 
-[] move register to a rest endpoint
+✔ move register to a rest endpoint @done(20-11-04 09:29)
 [] don't allow re-register?
+[]  
 [] 
