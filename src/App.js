@@ -30,6 +30,12 @@ const App = () => {
         body: JSON.stringify({user})
       });
       
+      if(!res.ok) {
+        alert(`username ${user} is already taken.`);
+        setUser(null);
+        setSocket(null);
+      }
+
       const ul = await res.json();
       setUserList(ul);
       console.log('registered', ul);

@@ -21,6 +21,9 @@ app.get('/', (req, res) => {
 app.post('/register', (req, res) => {
   console.log('body', req.body);
   const { user } = req.body;
+  if(userList[user]) {
+    res.status(409).send(`${user} already exists.`);
+  }
   userList[user] = { user, score: 0};
   console.log(`${user} registered, now we have`, userList);
   res.send(sortUserList());

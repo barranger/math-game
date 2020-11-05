@@ -4,6 +4,6 @@
 ✔ create register post endpoint @done(20-11-03 09:38)
 
 ✔ move register to a rest endpoint @done(20-11-04 09:29)
-[] don't allow re-register?
-[]  
-[] 
+✔ don't allow re-register? @done(20-11-05 09:31)
+[] loading spinner while logging in 
+[] better error messages
