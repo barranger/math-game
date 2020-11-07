@@ -1,0 +1,10 @@
+✔ send question from server @done(20-11-07 09:42)
+✔ Create Question timer @done(20-11-07 09:42)
+✔ handle answer on server @done(20-11-07 10:00)
+✔ limit quiz to 10 question @done(20-11-07 09:44)
+✔ count down for next quiz @done(20-11-07 10:31)
+✔ don't send user the answer @done(20-11-07 10:38)
+✔ don't allow the user to answer twice @done(20-11-07 10:31)
+✔ show if the user got the question right or wrong @done(20-11-07 10:52)
+✔ show the user the endgame screen @done(20-11-07 11:08)
+

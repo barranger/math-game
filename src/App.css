@@ -35,6 +35,10 @@
   cursor: pointer;
 }
 
+.question {
+  padding-bottom: 3rem;
+}
+
 .question span {
   font-size: 3rem;
   font-weight: 100;

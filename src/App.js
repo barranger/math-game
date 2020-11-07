@@ -6,21 +6,31 @@ import * as io from 'socket.io-client';
 
 const App = () => {
   const [user, setUser] = useState(null);
-  const [score, setScore] = useState(0);
   const [socket, setSocket] = useState(null);
+  const [question, setQuestion] = useState(null)
+  const [result, setResult] = useState(null);
+  const [finalResults, setFinalResults] = useState(null);
   const [userList, setUserList] = useState({});
 
   useEffect(() => {
     const setup = async () => {
       const sock = io();
 
-      sock.on('user list', (ul) => {
-        console.log('got back a userList', userList);
-        setUserList(ul);
+      sock.on('user list', (ul) => { setUserList(ul); });
+      sock.on('question', (q) => { 
+        setQuestion(q); 
+        setResult(null);
+        setFinalResults(null);
       });
+      sock.on('answer result', (result) => {
+        setQuestion(null);
+        setResult(result);
+      });
+
+      sock.on('quiz over', (ul) => setFinalResults(ul));
+
       setSocket(sock);
 
-      console.log('in setup with ', {user});
       const res = await fetch('/register', {
         method: 'post', 
         headers: {
@@ -36,9 +46,10 @@ const App = () => {
         setSocket(null);
       }
 
-      const ul = await res.json();
-      setUserList(ul);
-      console.log('registered', ul);
+      const registerResponse = await res.json();
+      setUserList(registerResponse.scores);
+      setQuestion(registerResponse.currentQuestion);
+      console.log('registered', registerResponse);
     }
       
     if (!socket && user) {
@@ -72,20 +83,28 @@ const App = () => {
         </ol>
         </section>
       <section className="question">
-        <Question onCorrect={
-          () => {
-            setScore( score + 1);
-            if(socket) {
-              socket.emit('correct answer', { user, score: score + 1 })
-            }
-          }
-        } />
+        {!finalResults && !result && question && <Question 
+          question={question}
+          onAnswer={(answer) => socket.emit('answer', { answer, user })} 
+        />}
+        {result && !finalResults && (
+          <>
+          <h2>Your answer is</h2>
+          <div className="question"><span>{result}</span></div>
+          </>
+        )}
+        {!question && !result && !finalResults && <h2>Quiz is Loading...</h2>}
+        {finalResults && (
+          <>
+          <h2>Final Results:</h2>
+          <div className="question"><span>{`You placed ${finalResults.findIndex((r)=> r.user === user) + 1} out of ${finalResults.length}`}</span></div>
+          </>
+        )}
       </section>
      
       <section className="goodbye">
         <div onClick={() => {
           setUser(null);
-          setScore(0);
         }}>
           <p>Good Bye!!</p>
         </div>
