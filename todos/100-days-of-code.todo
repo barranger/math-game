@@ -12,6 +12,6 @@
 [ ] loading while registering
 [ ] figure out user is null bug on server refresh
 [ ] stop the thread when no users
-[ ] move server code into folder
+✔ move server code into folder @done(20-11-08 13:58)
 [ ] Add eslint for client
 [ ] Add eslint for server
