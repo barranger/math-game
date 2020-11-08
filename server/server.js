@@ -11,7 +11,7 @@ const gameResetTime = 10000;
 
 const userList = {};
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, '..', 'build')));
 app.use(bodyParser.json());
 
 app.get('/ping', (req, res) => {
@@ -19,7 +19,7 @@ app.get('/ping', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
 });
 
 app.post('/register', (req, res) => {
