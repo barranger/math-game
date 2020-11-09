@@ -24,6 +24,9 @@ app.get('/', (req, res) => {
 
 app.post('/register', (req, res) => {
   const { user } = req.body;
+
+  console.log('we are registering', user);
+
   if(userList[user]) {
     res.status(409).send(`${user} already exists.`);
   }

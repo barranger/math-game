@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import User from './components/User';
 import Question from './components/Question';
 import * as io from 'socket.io-client';
+import { post } from './util/restUtil';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -26,30 +27,20 @@ const App = () => {
         setQuestion(null);
         setResult(result);
       });
-
       sock.on('quiz over', (ul) => setFinalResults(ul));
 
       setSocket(sock);
+      const regResponse = await post(`/register`, { user });
 
-      const res = await fetch('/register', {
-        method: 'post', 
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({user})
-      });
-      
-      if(!res.ok) {
+      if(regResponse.errorCode) {
         alert(`username ${user} is already taken.`);
         setUser(null);
         setSocket(null);
+      } else {
+        setUserList(regResponse.scores);
+        setQuestion(regResponse.currentQuestion);
+        console.log('registered', regResponse);
       }
-
-      const registerResponse = await res.json();
-      setUserList(registerResponse.scores);
-      setQuestion(registerResponse.currentQuestion);
-      console.log('registered', registerResponse);
     }
       
     if (!socket && user) {

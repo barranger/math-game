@@ -6,8 +6,8 @@
 ✔ move register to a rest endpoint @done(20-11-04 09:29)
 ✔ don't allow re-register? @done(20-11-05 09:31)
 
-[] loading spinner while logging in 
-[] better error messages
+[ ] loading spinner while logging in 
+[ ] better error messages
 [ ] refactor
 [ ] loading while registering
 [ ] figure out user is null bug on server refresh
