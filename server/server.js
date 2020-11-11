@@ -27,8 +27,9 @@ app.post('/register', (req, res) => {
 
   console.log('we are registering', user);
 
-  if(userList[user]) {
+  if(Object.keys(userList).findIndex( key => key.toLowerCase() === user.toLowerCase() ) !== -1 ) {
     res.status(409).send(`${user} already exists.`);
+    return;
   }
   userList[user] = { user, score: 0};
   res.send( { scores: sortUserList(), currentQuestion: currentQuestions[currentQuestions.length - 1] });
