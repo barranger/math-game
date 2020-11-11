@@ -1,0 +1,42 @@
+
+.loading #user-form {
+  position: absolute;
+  top: calc(50vh - 20rem);
+  left: calc(50% - 20rem);
+  margin: 0;
+  animation-name: spinner;
+  animation-iteration-count: 1;
+  animation-duration: 1s;
+
+  transform-style: preserve-3d;
+}
+
+.loading #user-form-back {
+  top: calc(50vh - 20rem);
+  left: calc(50% - 20rem);
+  margin: 0;
+  position: absolute;
+  animation-name: spinner-back;
+  animation-iteration-count: 1;
+  animation-duration: 1s;
+
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(180deg);
+  }
+}
+@keyframes spinner-back {
+  from {
+    transform: rotateY(-180deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}

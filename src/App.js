@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import User from './components/User';
 import Question from './components/Question';
 import * as io from 'socket.io-client';
-import { post } from './util/restUtil';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -30,17 +29,6 @@ const App = () => {
       sock.on('quiz over', (ul) => setFinalResults(ul));
 
       setSocket(sock);
-      const regResponse = await post(`/register`, { user });
-
-      if(regResponse.errorCode) {
-        alert(`username ${user} is already taken.`);
-        setUser(null);
-        setSocket(null);
-      } else {
-        setUserList(regResponse.scores);
-        setQuestion(regResponse.currentQuestion);
-        console.log('registered', regResponse);
-      }
     }
       
     if (!socket && user) {
@@ -50,7 +38,10 @@ const App = () => {
 
   if(!user) {
     return <User initial={user} save={(u) => {
-      setUser(u);
+
+      setUserList(u.scores);
+      setQuestion(u.currentQuestion);
+      setUser(u.user);
     }} />
   }
 
