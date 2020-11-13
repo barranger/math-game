@@ -1,4 +1,4 @@
-import '../App.css';
+import '../styles/App.css';
 import '../styles/user.css';
 import React, { useRef } from 'react';
 import { post } from '../util/restUtil';
@@ -30,10 +30,13 @@ const User = ({initial, save}) => {
       <div  id="user-form"  className="App">
         <section className="user">
           <form onSubmit={handleName}>
-            <input 
-              placeholder="Enter your name" 
-              ref={inputRef}
-              autoFocus></input>
+            <label>
+              <h3>Name</h3>
+              <input 
+                placeholder="Enter your name" 
+                ref={inputRef}
+                autoFocus></input>
+              </label>
             <button type="submit">Play Game</button>
           </form>
         </section>
