@@ -2,16 +2,15 @@
 ✔ push to heroku @started(20-11-01 18:06) @done(20-11-01 18:07) @lasted(1m1s)
 ✔ init user on connect @done(20-11-02 07:51)
 ✔ create register post endpoint @done(20-11-03 09:38)
-
 ✔ move register to a rest endpoint @done(20-11-04 09:29)
 ✔ don't allow re-register? @done(20-11-05 09:31)
-
 ✔ loading spinner while logging in @done(20-11-10 20:02)
 ✔ better error messages @done(20-11-10 20:02)
-[ ] refactor
 ✔ handle user name case sensitivity @done(20-11-11 18:21)
+✔ move server code into folder @done(20-11-08 13:58)
+
 [ ] figure out user is null bug on server refresh
 [ ] stop the thread when no users
-✔ move server code into folder @done(20-11-08 13:58)
+[ ] refactor
 [ ] Add eslint for client
 [ ] Add eslint for server

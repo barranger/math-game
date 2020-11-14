@@ -14,10 +14,6 @@ const userList = {};
 app.use(express.static(path.join(__dirname, '..', 'build')));
 app.use(bodyParser.json());
 
-app.get('/ping', (req, res) => {
- return res.send('pong');
-});
-
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
 });
@@ -26,6 +22,11 @@ app.post('/register', (req, res) => {
   const { user } = req.body;
 
   console.log('we are registering', user);
+
+  if(!user) {
+    res.status(400).send("[user] is required");
+    return;
+  }
 
   if(Object.keys(userList).findIndex( key => key.toLowerCase() === user.toLowerCase() ) !== -1 ) {
     res.status(409).send(`${user} already exists.`);
@@ -78,12 +79,10 @@ io.on('connection', (socket) => {
         io.emit( 'question', {...q, answer: null });
       }
       else {
-        console.log('quiz over')
         currentQuestions = [];
         io.emit( 'quiz over', sortUserList());
         clearInterval(questionTimer);
         setTimeout(() => {
-          console.log('I should be resetting things');
           if(userList) {
             for (const user in userList) {
               userList[user].score = 0;

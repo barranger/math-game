@@ -6,7 +6,7 @@ A real-time multiplayer math quiz game.
 
 In order to run the server run the following command from the root directory:
 
-### `cd server && npx nodemon server.js`
+### `npm run server`
 
 Runs the server in the development mode.
 

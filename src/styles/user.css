@@ -1,27 +1,30 @@
 
-.loading #user-form {
+.app-circle {
   position: absolute;
   top: calc(50vh - 20rem);
   left: calc(50% - 20rem);
   margin: 0;
-  animation-name: spinner;
+  backface-visibility: hidden;
+}
+
+.loading .app-circle {
   animation-iteration-count: 1;
   animation-duration: 1s;
-
   transform-style: preserve-3d;
 }
 
-.loading #user-form-back {
-  top: calc(50vh - 20rem);
-  left: calc(50% - 20rem);
-  margin: 0;
-  position: absolute;
-  animation-name: spinner-back;
-  animation-iteration-count: 1;
-  animation-duration: 1s;
+.loading #user-form {
+  animation-name: spinner;
+  transform: rotateY(180deg);
+}
 
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
+#user-form-back {
+  transform: rotateY(-180deg);
+}
+
+.loading #user-form-back {
+  animation-name: spinner-back;
+  transform: rotateY(0deg);
 }
 
 @keyframes spinner {
