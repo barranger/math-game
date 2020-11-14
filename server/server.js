@@ -6,8 +6,8 @@ var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
 
 const QUESTION_COUNT = 10;
-const QUESTION_TIME = 10000;
-const INTERMISSION_LENGTH = 5000;
+const QUESTION_TIME = 5000;
+const INTERMISSION_LENGTH = 3000;
 const GAME_RESET_TIME = 10000;
 
 const userList = {};
