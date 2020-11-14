@@ -14,3 +14,6 @@
 [ ] refactor
 [ ] Add eslint for client
 [ ] Add eslint for server
+[ ] introduce a context for q&a
+[ ] create "you answered" component
+[ ] teardown connection returned from useeffect

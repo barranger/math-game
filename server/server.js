@@ -5,9 +5,10 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
 
-const questionCount = 10;
-const questionTime = 5000;
-const gameResetTime = 10000;
+const QUESTION_COUNT = 10;
+const QUESTION_TIME = 10000;
+const INTERMISSION_LENGTH = 5000;
+const GAME_RESET_TIME = 10000;
 
 const userList = {};
 
@@ -60,26 +61,39 @@ io.on('connection', (socket) => {
   socket.on('answer', (msg) => {
     const currentQ = currentQuestions[currentQuestions.length - 1];
     if(!currentQ) {
-      console.warn('got an answer to an unknown question', msg);
+      console.warn('got an answer to an unknown question', msg); 
     } else if (!userList[msg.user]) {
       console.warn('got an answer from an unknown user', msg);
-    } else if(`${msg.answer}` === `${currentQ.answer}`) {
+    } 
+    
+    const duration = new Date() - currentQ.dt;
+    console.log(`User ${msg.user} took ${duration} ms to answer.`);
+    if(`${msg.answer}` === `${currentQ.answer}`) {
       socket.emit('answer result', 'correct');
       userList[msg.user].score++;
+      io.emit('user answer', { user: msg.user, duration, result: true})
       io.emit('user list', sortUserList());
     } else {
+      io.emit('user answer', { user: msg.user, duration, result: false})
       socket.emit('answer result', 'wrong');
     }
-  });
+  }); 
 
   const mainQuestionThread = () => {
-      if(currentQuestions.length < questionCount) {
+      console.log('in the main thread')
+      if(currentQuestions.length < QUESTION_COUNT) {
         const q = loadQuestion(currentQuestions.length);
         currentQuestions.push(q);
+        console.log('sending question')
         io.emit( 'question', {...q, answer: null });
+        setTimeout(() => {
+          console.log('sending scene change')
+          io.emit('scene change', {scene: 'intermission'})
+        }, QUESTION_TIME)
       }
       else {
         currentQuestions = [];
+        console.log('quiz over');
         io.emit( 'quiz over', sortUserList());
         clearInterval(questionTimer);
         setTimeout(() => {
@@ -88,17 +102,17 @@ io.on('connection', (socket) => {
               userList[user].score = 0;
             }
             io.emit('user list', sortUserList());
-            questionTimer = setInterval(mainQuestionThread, questionTime);
+            questionTimer = setInterval(mainQuestionThread, QUESTION_TIME + INTERMISSION_LENGTH);
           }
-        }, gameResetTime);
+        }, GAME_RESET_TIME);
       }
     };
 
   if(!questionTimer) {
-    questionTimer = setInterval( mainQuestionThread, questionTime );
+    console.log('starting the quiz')
+    questionTimer = setInterval( mainQuestionThread, QUESTION_TIME + INTERMISSION_LENGTH );
   }
 
-  console.log('about to send current')
   socket.emit(currentQuestions[currentQuestions.length - 1]);
 
 });
@@ -114,6 +128,7 @@ const loadQuestion = (qNumber) => {
     q.operation = operations[Math.round(Math.random() * 3)];
     // eslint-disable-next-line no-eval
     q.answer = eval(`${q.left}${q.operation}${q.right}`);
+    q.dt = new Date();
   };
   return q;
 }

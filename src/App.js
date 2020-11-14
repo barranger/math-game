@@ -3,47 +3,67 @@ import { useEffect, useState } from 'react';
 import User from './components/User';
 import Question from './components/Question';
 import * as io from 'socket.io-client';
+import Intermission from './components/Intermission';
+import FinalResults from './components/FinalResults';
 
 const App = () => {
   const [user, setUser] = useState(null);
   const [socket, setSocket] = useState(null);
+  const [scene, setScene ] = useState(null);
   const [question, setQuestion] = useState(null)
   const [result, setResult] = useState(null);
   const [finalResults, setFinalResults] = useState(null);
+  const [questionResults, setQuestionResults] = useState([]);
   const [userList, setUserList] = useState({});
+
+  console.log('top level', questionResults);
 
   useEffect(() => {
     const setup = async () => {
       const sock = io();
 
       sock.on('user list', (ul) => { setUserList(ul); });
+      sock.on('scene change', (msg) => { 
+        setScene(msg.scene);
+      });
       sock.on('question', (q) => { 
         setQuestion(q); 
+        console.log('setting the question results to an empty array')
+        setQuestionResults([]);
         setResult(null);
         setFinalResults(null);
+        setScene('question');
       });
       sock.on('answer result', (result) => {
+        setScene('answered');
         setQuestion(null);
         setResult(result);
       });
-      sock.on('quiz over', (ul) => setFinalResults(ul));
-
+      sock.on('user answer', (msg) => { 
+        setQuestionResults((res) => [...res, msg]);
+      })
+      sock.on('quiz over', (ul) => {
+        setFinalResults(ul);
+        setScene('final results');
+      });
       setSocket(sock);
     }
       
     if (!socket && user) {
       setup();
     }
-  }, [socket, user, userList]);
+  }, [socket, user, userList, questionResults]);
 
   if(!user) {
     return <User initial={user} save={(u) => {
-
       setUserList(u.scores);
       setQuestion(u.currentQuestion);
       setUser(u.user);
     }} />
   }
+
+  // console.log('we are displaying the scene', scene);
+  // console.log('the question results are: ', questionResults);
 
   return (
     <>
@@ -65,23 +85,19 @@ const App = () => {
         </ol>
         </section>
       <section className="question">
-        {!finalResults && !result && question && <Question 
+        {!scene && <h2>Quiz is Loading...</h2> }
+        {scene === 'question' && <Question 
           question={question}
           onAnswer={(answer) => socket.emit('answer', { answer, user })} 
         />}
-        {result && !finalResults && (
+        {scene === 'answered' && (
           <>
           <h2>Your answer is</h2>
           <div className="question"><span>{result}</span></div>
           </>
         )}
-        {!question && !result && !finalResults && <h2>Quiz is Loading...</h2>}
-        {finalResults && (
-          <>
-          <h2>Final Results:</h2>
-          <div className="question"><span>{`You placed ${finalResults.findIndex((r)=> r.user === user) + 1} out of ${finalResults.length}`}</span></div>
-          </>
-        )}
+        {scene === 'intermission' && <Intermission results={questionResults} />} 
+        {scene === 'final results' && <FinalResults user={user} results={finalResults} />}
       </section>
      
       <section className="goodbye">

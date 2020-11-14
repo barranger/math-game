@@ -3,8 +3,13 @@ import React, { useRef } from 'react';
 const Question = ({onAnswer, question}) => {
   const inputRef = useRef();
 
+  if(!question) {
+    return null;
+  }
+
   const handleAnswer = (e) => {
     e.preventDefault(); 
+    console.log('why am I submitting?')
     const answer = inputRef.current.value;
     onAnswer(answer);
     inputRef.current.value = '';

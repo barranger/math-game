@@ -1,8 +1,8 @@
 ✔ fix the initial loading div location @done(20-11-14 09:34)
 ✔ fix empty user name @done(20-11-14 09:23)
-[ ] store the question sent time
-[ ] send a user answered msg (username, result, time)
-[ ] add a intermission time
+✔ store the question sent time @done(20-11-14 09:42)
+✔ send a user answered msg (username, result, time) @done(20-11-14 09:49)
+✔ add a intermission time @done(20-11-14 10:36)
 [ ] display question leaderboard 
 [ ] display quiz leaderboard
 [ ] add a 42 answer only bot
