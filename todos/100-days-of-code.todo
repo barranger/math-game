@@ -8,6 +8,7 @@
 ✔ better error messages @done(20-11-10 20:02)
 ✔ handle user name case sensitivity @done(20-11-11 18:21)
 ✔ move server code into folder @done(20-11-08 13:58)
+✔ not getting update bot score if I don't answer @done(20-11-21 10:19)
 
 [ ] figure out user is null bug on server refresh
 [ ] stop the thread when no users
@@ -19,6 +20,7 @@
 [ ] teardown connection returned from useeffect
 [ ] move the main question thread out of server.js
 [ ] question leaderboard is on client, please fix.
-[ ] not getting update bot score if I don't answer
 [ ] add userlist to user answer message since we always send it anyways
 [ ] create module to hold all the bots
+[ ] display quiz leaderboard
+[ ] style leaderboards

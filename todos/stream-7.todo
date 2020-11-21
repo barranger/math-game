@@ -1,4 +1,4 @@
 
-[ ] add a 42 answer only bot
-[ ] display quiz leaderboard
-[ ] style leaderboards
+✔ add a 42 answer only bot @done(20-11-21 10:20)
+✔ refactored server code @done(20-11-21 10:20)
+✔ added a 50/50 bot @done(20-11-21 10:20)
