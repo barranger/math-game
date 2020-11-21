@@ -17,3 +17,8 @@
 [ ] introduce a context for q&a
 [ ] create "you answered" component
 [ ] teardown connection returned from useeffect
+[ ] move the main question thread out of server.js
+[ ] question leaderboard is on client, please fix.
+[ ] not getting update bot score if I don't answer
+[ ] add userlist to user answer message since we always send it anyways
+[ ] create module to hold all the bots
