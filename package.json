@@ -19,7 +19,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "server": "npx nodemon server/server.js"
+    "server": "NODE_ENV=dev npx nodemon server/server.js"
   },
   "eslintConfig": {
     "extends": [

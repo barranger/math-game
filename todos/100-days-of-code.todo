@@ -22,5 +22,3 @@
 [ ] question leaderboard is on client, please fix.
 [ ] add userlist to user answer message since we always send it anyways
 [ ] create module to hold all the bots
-[ ] display quiz leaderboard
-[ ] style leaderboards

@@ -10,11 +10,7 @@ const quizDB = require('./ds/quizDB')
 const only42 = require('./bots/only42');
 const fiftyfifty = require('./bots/fiftyfifty');
 
-const QUESTION_TIME = 5000;
-const INTERMISSION_LENGTH = 3000;
-const GAME_RESET_TIME = 10000;
-
-
+const config = require('./config');
 let questionTimer = null;
 
 app.use(express.static(path.join(__dirname, '..', 'build')));
@@ -80,17 +76,17 @@ io.on('connection', (socket) => {
   }
 
   const mainQuestionThread = () => {
-      console.log('in the main thread')
+      console.log('in the main thread', config)
       if(quizDB.isComplete()) {
         const q = quizDB.loadQuestion();
-        console.log('sending question')
+        console.log('sending question', process.env.NODE_ENV)
         io.emit( 'question', {...q, answer: null });
         only42.ask(q, handleBotAnswer);
         fiftyfifty.ask(q, handleBotAnswer);
         setTimeout(() => {
           console.log('sending scene change')
           io.emit('scene change', {scene: 'intermission'})
-        }, QUESTION_TIME)
+        }, config.questionTime)
       }
       else {
         quizDB.reset();
@@ -100,14 +96,14 @@ io.on('connection', (socket) => {
         setTimeout(() => {
             userDB.resetScores();
             io.emit('user list', userDB.sortUserList());
-            questionTimer = setInterval(mainQuestionThread, QUESTION_TIME + INTERMISSION_LENGTH);
-        }, GAME_RESET_TIME);
+            questionTimer = setInterval(mainQuestionThread, config.questionTime + config.intermissionLength);
+        }, config.gameResetTime);
       }
     };
 
   if(!questionTimer) {
     console.log('starting the quiz')
-    questionTimer = setInterval( mainQuestionThread, QUESTION_TIME + INTERMISSION_LENGTH );
+    questionTimer = setInterval( mainQuestionThread, config.questionTime + config.intermissionLength);
     only42.startQuiz(userDB, quizDB);
     fiftyfifty.startQuiz(userDB, quizDB);
   }

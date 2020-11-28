@@ -1,7 +1,5 @@
+const config = require('../config');
 let currentQuestions = [];
-
-const QUESTION_COUNT = 10;
-
 const operations = [ '+', '-', '/', '*'];
 
 const loadQuestion = () => {   
@@ -24,7 +22,7 @@ const reset = () => { currentQuestions = []; };
 
 const current = () =>  currentQuestions[currentQuestions.length - 1];
 
-const isComplete = () => currentQuestions.length < QUESTION_COUNT;
+const isComplete = () => currentQuestions.length < config.questionCount;
 
 module.exports = {
   current,
