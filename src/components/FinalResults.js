@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/results.css'
 
 const FinalResults = ({results, user}) => {
   if(!results) {
@@ -7,8 +8,17 @@ const FinalResults = ({results, user}) => {
 
   return (
   <>
-    <h2>Final Results:</h2>
-    <div className="question"><span>{`You placed ${results.findIndex((r)=> r.user === user) + 1} out of ${results.length}`}</span></div>
+    <div className="results">
+      <span>{`You placed ${results.findIndex((r)=> r.user === user) + 1} out of ${results.length}`}</span>
+      <ul>
+          {
+            results.map(r => {
+              console.log('user ', r);
+              return (<li key={r.user}>{`${r.score}pts - ${r.user}`}</li>)
+            })
+          }
+      </ul>
+      </div>
   </>
   );
 };

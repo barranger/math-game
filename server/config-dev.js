@@ -1,3 +1,3 @@
 module.exports = {
-  questionCount: 2
+  intermissionLength: 3000,
 };

@@ -1,3 +1,6 @@
+html, body {
+  color: white;
+}
 .App {
   text-align: center;
   width: 40rem;
@@ -5,21 +8,16 @@
   margin: calc(50vh - 20rem) auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  color: white;
   background: #456BD9;
   border-radius: 50%;
 }
 
 .App-header {
-  min-height: 20vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   font-size: 3rem;
   font-weight: bold;
+  margin-top: 3rem;
 }
 
 .score {
@@ -45,16 +43,24 @@
   padding: 1rem;
 }
 
+.question ol {
+  font-size: 1.5rem;
+}
+
+.question li.incorrect {
+  font-weight: 200;
+}
+
 .question input {
   width: 6rem;
 }
 
 
 
-.user form{
+.user {
+  min-height: 100%;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   justify-content: center;
   align-items: center;
 }

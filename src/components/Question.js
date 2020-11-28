@@ -9,7 +9,6 @@ const Question = ({onAnswer, question}) => {
 
   const handleAnswer = (e) => {
     e.preventDefault(); 
-    console.log('why am I submitting?')
     const answer = inputRef.current.value;
     onAnswer(answer);
     inputRef.current.value = '';

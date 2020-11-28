@@ -1,4 +1,6 @@
 ✔ move timing and # questions to config @done(20-11-28 09:57)
 ✔ create dev config for # of questions/timing @done(20-11-28 09:57)
-[ ] display quiz leaderboard
-[ ] style leaderboards
+✔ display quiz leaderboard @done(20-11-28 10:46)
+✔ style leaderboards @done(20-11-28 10:46)
+
+[ ] figure out user is null bug on server refresh

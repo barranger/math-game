@@ -100,9 +100,10 @@ io.on('connection', (socket) => {
         }, config.gameResetTime);
       }
     };
-
+ 
   if(!questionTimer) {
     console.log('starting the quiz')
+    mainQuestionThread();
     questionTimer = setInterval( mainQuestionThread, config.questionTime + config.intermissionLength);
     only42.startQuiz(userDB, quizDB);
     fiftyfifty.startQuiz(userDB, quizDB);

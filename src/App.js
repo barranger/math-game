@@ -5,6 +5,7 @@ import Question from './components/Question';
 import * as io from 'socket.io-client';
 import Intermission from './components/Intermission';
 import FinalResults from './components/FinalResults';
+import ScoreBoard from './components/ScoreBoard';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -16,8 +17,6 @@ const App = () => {
   const [questionResults, setQuestionResults] = useState([]);
   const [userList, setUserList] = useState({});
 
-  console.log('top level', questionResults);
-
   useEffect(() => {
     const setup = async () => {
       const sock = io();
@@ -28,7 +27,6 @@ const App = () => {
       });
       sock.on('question', (q) => { 
         setQuestion(q); 
-        console.log('setting the question results to an empty array')
         setQuestionResults([]);
         setResult(null);
         setFinalResults(null);
@@ -76,14 +74,6 @@ const App = () => {
       <header className="App-header">
         <p>{`Math Game`}</p>
       </header>
-      <section className="score">
-        <h3>Scores</h3>
-        <ol>
-          {Object.keys(userList).map(u => {   
-            return <li key={u}>{`${userList[u].user}: ${userList[u].score}`}</li>
-          })}
-        </ol>
-        </section>
       <section className="question">
         {!scene && <h2>Quiz is Loading...</h2> }
         {scene === 'question' && <Question 
@@ -108,6 +98,7 @@ const App = () => {
         </div>
       </section>
     </div>
+    <ScoreBoard userList={userList} />
     </>
   );
 }

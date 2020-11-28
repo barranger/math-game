@@ -16,6 +16,9 @@ const addUser = (user) => {
 }
 
 const incrementScore = (user, amt = 1) => {
+  if(!userList[user]) {
+    addUser(user);
+  }
   userList[user].score += amt;
 }
 
